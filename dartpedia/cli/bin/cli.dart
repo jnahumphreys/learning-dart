@@ -1,3 +1,39 @@
+import 'dart:io';
+
+const version = '0.0.1';
+
 void main(List<String> arguments) {
-  print('Hello, Dart!');
+  if (arguments.isEmpty || arguments.first == 'help') {
+    printUsage();
+  } else if (arguments.first == 'version') {
+    print('Dartpedia CLI version $version');
+  } else if (arguments.first == 'search') {
+    final searchArgs = arguments.length > 1 ? arguments.sublist(1) : null;
+    searchWikipedia(searchArgs);
+  } else {
+    printUsage();
+  }
+}
+
+void searchWikipedia(List<String>? arguments) {
+  final String articleTitle;
+
+  if (arguments == null || arguments.isEmpty) {
+    print('Please provide an article title');
+
+    articleTitle = stdin.readLineSync() ?? '';
+  } else {
+    articleTitle = arguments.join(' ');
+  }
+
+  print('Looking up articles about "$articleTitle". Please wait.');
+  print('Here ya go!');
+  print('(Pretend this is an article about "$articleTitle")');
+}
+
+void printUsage() {
+  // Add this new function
+  print(
+    "The following commands are valid: 'help', 'version', 'search <ARTICLE-TITLE>'",
+  );
 }
